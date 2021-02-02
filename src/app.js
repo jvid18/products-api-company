@@ -1,14 +1,20 @@
 import express from 'express';
 import morgan from 'morgan';
 import pkg from '../package.json';
+import config from './config';
+
+import { createRoles } from './libs/initialSetup';
 
 // Routes
 import productsRoutes from './routes/products.routes';
+import authRoutes from './routes/auth.routes';
 
 const app = express();
+createRoles();
 
 // Settings
 app.set('pkg', pkg);
+app.set('port', config.PORT);
 
 // Middlewares
 app.use(morgan('dev'));
@@ -25,6 +31,7 @@ app.get('/', (req, res) => {
 });
 
 // Products
-app.use('/products', productsRoutes);
+app.use('/api/products', productsRoutes);
+app.use('/api/auth', authRoutes);
 
 export default app;
