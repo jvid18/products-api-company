@@ -30,8 +30,9 @@ export const verifyToken = (req, res, next) => {
 const findUserRole = async (userId, findRole) => {
 	const user = await User.findById(userId);
 	const roles = await Role.find({ _id: { $in: user.roles } });
+	const roleNames = roles.map(({ name }) => name);
 
-	return roles.reduce((acc, { name }) => name === findRole ? ++acc : acc, 0);
+	return roleNames.includes(findRole);
 }
 
 export const isModerator = async (req, res, next) => {
