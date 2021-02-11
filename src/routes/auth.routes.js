@@ -4,11 +4,11 @@ const router = Router();
 import * as AuthCtrl from '../controllers/auth.controller';
 import { verifySignUp } from '../middlewares';
 
-router.post('/signin', [
+router.post('/signin', AuthCtrl.signIn);
+
+router.post('/signup', [
 	verifySignUp.checkDuplicateUsernameOrEmail,
 	verifySignUp.checkRolesExisted,
-], AuthCtrl.signIn);
-
-router.post('/signup', AuthCtrl.signUp);
+], AuthCtrl.signUp);
 
 export default router;
